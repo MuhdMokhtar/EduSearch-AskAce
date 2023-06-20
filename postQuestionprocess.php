@@ -8,7 +8,7 @@ if(isset($_POST['Send']))
 	$usrid=1002;
 	$title=$_POST['title'];
 	$content=$_POST['content'];
-	$status="Accepted";
+	$status="Pending";
 	$date=date('Y/m/d h:i:s', time());
 	$expertid=2001;
 	

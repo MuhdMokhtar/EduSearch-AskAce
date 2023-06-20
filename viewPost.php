@@ -30,7 +30,7 @@ $result2 = $conn->query($cmdcount);
                 $msg = "return confirm(\"".$alert."\")";
                 $del="delete.php?uid=".$row['PostID'];
             ?> 
-                <?php echo "<li><a href='".$href."'>" .$row['PostTitle']."</a></li><br>";//call column name using row ?>
+                <?php echo "<li><a href='".$href."' target='_parent'>" .$row['PostTitle']."</a></li><br>";//call column name using row ?>
                 <?php echo "<ul><li>Posted on: " .$row['PostDate']."</li></ul><br>";//call column name using row ?>
                 <?php echo "<ul><li><a onclick='return confirm()' href='".$del."'>Delete</a></li></ul><br>" ?>
             <?php 

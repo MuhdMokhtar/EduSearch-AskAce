@@ -2,14 +2,18 @@
 //call connection
 include("dbase.php");
 
+//declare varibale get to store value uid from the url
+$user_id=$_GET['uid'];
+
 //sql command SELECT
-$cmdselect="SELECT post.*, users.Username FROM post INNER JOIN users ON post.UserID=users.UserID WHERE post.PostStatus='Accepted' ORDER BY PostDate DESC LIMIT 3";
-$cmdselectlast="SELECT post.*, users.Username FROM post INNER JOIN users ON post.UserID=users.UserID WHERE post.PostStatus='Accepted' ORDER BY PostDate DESC";
+$cmdselect="SELECT * FROM post WHERE UserID='$user_id' AND PostStatus='Accepted'";
+$cmdcount="SELECT COUNT(PostID) as 'total' FROM post WHERE UserID='$user_id' AND PostStatus='Accepted'";
+$cmdselect2="SELECT post.*, users.Username FROM post INNER JOIN users ON post.UserID=users.UserID WHERE post.UserID='$user_id' AND post.PostStatus='Accepted'";
 
 //execute command
 $result = $conn->query($cmdselect);
-$result2 = $conn->query($cmdselectlast);
-
+$result2 = $conn->query($cmdcount);
+$result3 = $conn->query($cmdselect2);
 ?>
 <html>
     <head>
@@ -17,7 +21,7 @@ $result2 = $conn->query($cmdselectlast);
     </head>
     <link rel="stylesheet" type="text/css" href="Style.css">
     <body>
-        <header class="header">
+    <header class="header">
             <div class="logo logo-left">
                 <img width="60px" src="Image/fklogo.png" alt="Left Logo">
             </div>
@@ -26,7 +30,7 @@ $result2 = $conn->query($cmdselectlast);
                 <img width="60px" src="Image/notiLogo.png" alt="Right Logo">
             </div>
         </header>
-    
+
         <div id="navBar">
             <ul>
                 <li><a href="main.php"> HOME </a></li>
@@ -37,42 +41,30 @@ $result2 = $conn->query($cmdselectlast);
                 <li><a href=""> LOGOUT </a></li>
             </ul>
         </div>
-        <br>
-        <button id="btn1" onclick="location.href='postQuestion.php'">Post A Question</button>
-        <button id="btn1" onclick="location.href='viewAllPost.php'">View All Post</button>
-        <br><br><br>
          <div class="activePost">
-            <h3>Active Post</h3>
+            <?php $row3=$result3->fetch_assoc();?>
+            <?php echo "<h1>Posted by: " .$row3['Username']."</h1>"; ?>
             <ul>
             <?php 
             //is there any row return by variable $result? if value > 0 --> YES
             if($result->num_rows >0){
+                $row2=$result2->fetch_assoc();
+                echo "<h4>Total Post by this user: ".$row2['total']."</h4>";
             //output data each row:$row will be used to display the value
             while($row=$result->fetch_assoc()){ 
                 $href="displayPost.php?uid=".$row['PostID'];
-            ?>
-                <?php echo "<li><a href='".$href."'>" .$row['PostTitle']."</a></li><br>";//call column name using row ?>
-                <?php echo "<ul><li>Posted by: " .$row['Username']."</li></ul><br>";//call column name using row ?>
+                $alert='Are you sure you want to Delete?';
+                $msg = "return confirm(\"".$alert."\")";
+                $del="delete.php?uid=".$row['PostID'];
+            ?> 
+                <?php echo "<li><a href='".$href."' target='_parent'>" .$row['PostTitle']."</a></li><br>";//call column name using row ?>
+                <?php echo "<ul><li>Posted on: " .$row['PostDate']."</li></ul><br>";//call column name using row ?>
             <?php 
             }//close while
             }//close if-->num_rows 
             ?>
             </ul>
         </div>
-
-        
-        <?php $row2=$result2->fetch_assoc() ?>
-        <h3 class="lPost">Last Post</h3>
-         <div class="lastPost">
-            <?php $href="displayPost.php?uid=".$row2['PostID']; ?>
-            <h1><?php echo "<a href='".$href."'>" .$row2['PostTitle']."</a><br>";//call column name using row ?></h1>
-            <!--<h1><?php echo $row2['PostTitle'];?></h1><hr>-->
-            <b>Posted by: <?php echo $row2['Username'];?></b><br><br>
-            <div class="content">
-                <?php echo $row2['PostContent'];?>
-            </div>
-            
-            <br><br><br><hr>
         </div>
     </body>
     <footer>Copyright FK</footer>

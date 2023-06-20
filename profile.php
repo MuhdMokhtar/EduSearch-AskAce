@@ -44,7 +44,7 @@
 					<td align="center" width="20%"><a href="viewPost.php" target="iframe1">View Post</a></td>
 				</tr>
 				<tr>
-					<td align="center" width="20%"><a href="about:blank" target="iframe1">View Comments</a></td>
+					<td align="center" width="20%"><a href="userStatistic.php" target="iframe1">View Statistics</a></td>
 				</tr>
 				<tr>
 					<td align="center" width="20%"><a href="settings.php" target="iframe1">Settings</a></td>

@@ -6,7 +6,7 @@ include("dbase.php");
 $post_id=$_GET['uid'];
 
 //sql select
-$cmdselect="SELECT post.*, users.Username FROM post INNER JOIN users ON post.UserID=users.UserID WHERE PostID = $post_id";
+$cmdselect="SELECT post.*, users.Username, expert.ExpertName FROM post INNER JOIN users ON post.UserID=users.UserID INNER JOIN expert ON post.ExpertID=expert.ExpertID WHERE PostID = $post_id";
 
 $result = $conn->query($cmdselect);
 ?>
@@ -36,10 +36,13 @@ $result = $conn->query($cmdselect);
                 <li><a href=""> LOGOUT </a></li>
             </ul>
         </div>
-        <?php $row=$result->fetch_assoc() ?>
+        <?php $row=$result->fetch_assoc() ;
+        $href="viewUserPost.php?uid=".$row['UserID']; ?>
          <div class="lastPost">
             <h1><?php echo $row['PostTitle'];?></h1><hr>
-            <b>Posted by: <?php echo $row['Username'];?></b><br><br>
+            <?php echo "<li><a href='".$href."' target='_parent'>" .$row['Username']."</a></li><br>";//call column name using row ?>
+            <b>Posted by: <?php echo $row['Username'];?></b>
+            <br>Status: <?php echo $row['PostStatus'];?><br><br>
             <div class="content">
                 <?php echo $row['PostContent'];?>
             </div>
@@ -47,7 +50,20 @@ $result = $conn->query($cmdselect);
             <br><br><br><br><br><hr>
             
         </div>
+        <?php
+            if($row['Response']==null) {
+        ?>
         <button id="btn1" onclick="location.href='postQuestion.php'">Post Answer</button>
+        <?php 
+            }else{
+        ?>
+        <div class="lastPost">
+        <b>Answered by: <?php echo $row['ExpertName'];?></b>
+        <br><?php echo $row['Response'];?><br><br>
+        </div>
+        <?php
+            }
+        ?>
         </body>
     <footer>Copyright FK</footer>
 </html>

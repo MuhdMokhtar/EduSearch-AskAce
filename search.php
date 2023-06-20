@@ -1,15 +1,12 @@
-<?php 
+<?php
 //call connection
 include("dbase.php");
 
-//sql command SELECT
-$cmdselect="SELECT post.*, users.Username FROM post INNER JOIN users ON post.UserID=users.UserID WHERE post.PostStatus='Accepted' ORDER BY PostDate DESC LIMIT 3";
-$cmdselectlast="SELECT post.*, users.Username FROM post INNER JOIN users ON post.UserID=users.UserID WHERE post.PostStatus='Accepted' ORDER BY PostDate DESC";
+$search = $_POST['search'];
 
-//execute command
-$result = $conn->query($cmdselect);
-$result2 = $conn->query($cmdselectlast);
+$sql = "Select post.*, users.Username from post INNER JOIN users ON post.UserID=users.UserID WHERE PostTitle like '%$search%'";
 
+$result = $conn->query($sql);
 ?>
 <html>
     <head>
@@ -38,11 +35,13 @@ $result2 = $conn->query($cmdselectlast);
             </ul>
         </div>
         <br>
-        <button id="btn1" onclick="location.href='postQuestion.php'">Post A Question</button>
-        <button id="btn1" onclick="location.href='viewAllPost.php'">View All Post</button>
+        <form action="search.php" method="post">
+            Search Keyword: <input type="text" name="search">
+            <input type ="submit" value="Search">
+        </form>
         <br><br><br>
          <div class="activePost">
-            <h3>Active Post</h3>
+            <h3>All Post</h3>
             <ul>
             <?php 
             //is there any row return by variable $result? if value > 0 --> YES
@@ -58,21 +57,6 @@ $result2 = $conn->query($cmdselectlast);
             }//close if-->num_rows 
             ?>
             </ul>
-        </div>
-
-        
-        <?php $row2=$result2->fetch_assoc() ?>
-        <h3 class="lPost">Last Post</h3>
-         <div class="lastPost">
-            <?php $href="displayPost.php?uid=".$row2['PostID']; ?>
-            <h1><?php echo "<a href='".$href."'>" .$row2['PostTitle']."</a><br>";//call column name using row ?></h1>
-            <!--<h1><?php echo $row2['PostTitle'];?></h1><hr>-->
-            <b>Posted by: <?php echo $row2['Username'];?></b><br><br>
-            <div class="content">
-                <?php echo $row2['PostContent'];?>
-            </div>
-            
-            <br><br><br><hr>
         </div>
     </body>
     <footer>Copyright FK</footer>

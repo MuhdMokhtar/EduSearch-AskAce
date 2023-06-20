@@ -1,0 +1,133 @@
+.header {
+    display: flex;
+    border-radius: 5px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    height: 100px;
+    background-color: rgb(128, 128, 128);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: url("Image/bg.jpg");
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+}
+
+.logo-left {
+    margin-right: 10px;
+}
+
+.logo-right {
+    margin-left: 10px;
+}
+
+.text {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#navBar li {
+    padding: 10px;
+    display: inline-block;
+}
+
+#navBar {
+    text-align: center;
+}
+
+#navBar a {
+    text-decoration: none;
+    color: #34495E;
+}
+
+#navBar ul {
+    list-style-type: inherit;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #41a1dd;
+    border-radius: 5px;
+}
+
+#navBar li {
+    float: none;
+    position: relative;
+    border-right: 1px solid #bbb;
+}
+
+
+#navBar li:last-child {
+    border-right: none;
+}
+
+#navBar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#navBar li a:hover:not(.active) {
+    background-color: #a6bbbd;
+    border-radius: 25px;
+}
+
+.activePost {
+    position: relative;
+    margin: 10px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding-bottom: 20px;
+}
+
+.lPost {
+    margin: 10px;
+}
+
+.lastPost {
+    position: relative;
+    margin: 10px;
+    border-bottom: 1px solid black;
+    padding-bottom: 20px;
+    padding-left: 50px;
+}
+
+.content {
+    height: 200px;
+    position: absolute;
+    right: 50%;
+    padding-left: 50px;
+}
+
+footer {
+    font-size: 12px;
+    color: white;
+    width: 98%;
+    height: 20px;
+    background: #41a1dd;
+    text-align: center;
+    border-radius: 5px;
+    position: fixed;
+    margin: 10px;
+    margin-bottom: 0px;
+    bottom: 0px;
+}
+
+#btn1 {
+    width: 10%;
+    float: left;
+    background-color: #41a1dd;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}

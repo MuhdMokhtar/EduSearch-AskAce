@@ -5,7 +5,7 @@
 define("DATABASE_HOST", "localhost");
 define("DATABASE_USER", "root");
 define("DATABASE_PASS", "");
-define("DATABASE_DB", "edusearch");
+define("DATABASE_DB", "fk-edusearchaskace");
 //define("DATABASE_PASSWORD", "password");
 
 // To establish a connection to database and save in $conn

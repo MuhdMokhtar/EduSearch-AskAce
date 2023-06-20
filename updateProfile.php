@@ -45,6 +45,25 @@ $result = $conn->query($cmdselect);
 			<input type="text" name="number" value="<?php echo $row['Phone'];?>" required/> 
 			<br>
 			<br>
+
+			<h4>Research Topic:</h4>
+
+			<input type="text" name="research" value="<?php echo $row['Research'];?>" required/> 
+			<br>
+			
+
+			<h4>Academic Status:</h4>
+			
+			
+            <select name="acaStatus" required>
+					<option value="<?php echo $row['AcademicStatus'];?>"><?php echo $row['AcademicStatus'];?></option>
+					<option value="Lecturer: Active">Lecturer: Active</option>
+					<option value="Lecturer: Inactive">Lecturer: Inactive</option>
+					<option value="Student: Active">Student: Active</option>
+                    <option value="Student: Inactive">Student: Inactive</option>
+            </select>
+			<br>
+            <br>
 			
 			<input type="submit" name="Send" value="Update"/> 
 				

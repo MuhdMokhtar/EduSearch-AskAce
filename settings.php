@@ -18,6 +18,6 @@ $result = $conn->query($cmdselect);
     <?php 
 		$row=$result->fetch_assoc()?>
         <h1>Settings</h1>
-    <a onclick="return confirm('Adakah anda pasti untuk padam?')" href="deleteaccount.php?uid=<?php echo $row['UserID'];?>">Delete Account</a>
+    <a onclick="return confirm('Are you sure you want to delete?')" href="deleteaccount.php?uid=<?php echo $row['UserID'];?>">Delete Account</a>
     </body>
 </html>

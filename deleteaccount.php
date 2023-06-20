@@ -6,11 +6,11 @@ include("dbase.php");
 $usr_id=$_GET['uid'];
 
 //sql select
-$cmddelete="DELETE FROM user WHERE UserID = $usr_id";
+$cmddelete="DELETE FROM users WHERE UserID = $usr_id";
 
 $result = $conn->query($cmddelete);
 ?>
 <script>
     //alert("Data has been deleted");
-	window.location="main.php";
+	window.open('main.php','_parent');
 </script>

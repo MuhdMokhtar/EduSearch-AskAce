@@ -9,10 +9,12 @@ if(isset($_POST['Send']))
 	$email=$_POST['email'];
     $pswd=$_POST['pswd'];
 	$number=$_POST['number'];
+    $research=$_POST['research'];
+	$acastatus=$_POST['acaStatus'];
     //added
     $userid=$_POST['userid'];
 	//Update sql
-	$cmdupdate="UPDATE users SET Username='$uname', Email='$email', Password='$pswd', Phone='$number' WHERE UserID='$userid'";
+	$cmdupdate="UPDATE users SET Username='$uname', Email='$email', Password='$pswd', Phone='$number', Research='$research', AcademicStatus='$acastatus' WHERE UserID='$userid'";
 
 	if ($conn->query($cmdupdate)=== TRUE)
 	{

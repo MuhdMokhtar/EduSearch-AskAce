@@ -2,7 +2,7 @@
 require_once "dbase.php";
 session_start();
 
-$expertID =  $_SESSION['ExpertID'];
+$expertID = $_SESSION['ExpertID'];
 
 // Fetch expert data from the database
 $query = "SELECT ExpertName, ExpertEmail, ContactInfo FROM expert WHERE ExpertID = ?";
@@ -13,8 +13,7 @@ $expertResult = $statement->get_result();
 $expert = $expertResult->fetch_assoc();
 $statement->close();
 
-
-$query = "SELECT ExpertArea, Major, YearOFExpertise FROM expertise WHERE ExpertID = ?";
+$query = "SELECT ExpertiseID, ExpertArea, Major, YearOFExpertise FROM expertise WHERE ExpertID = ?";
 $statement = $conn->prepare($query);
 $statement->bind_param('i', $expertID);
 $statement->execute();
@@ -22,7 +21,7 @@ $expertResult = $statement->get_result();
 $expertAreas = $expertResult->fetch_all(MYSQLI_ASSOC);
 $statement->close();
 
-$query = "SELECT Title, Status FROM research WHERE ExpertID = ?";
+$query = "SELECT researchID,Title, Status FROM research WHERE ExpertID = ?";
 $statement = $conn->prepare($query);
 $statement->bind_param('i', $expertID);
 $statement->execute();
@@ -31,17 +30,16 @@ $research = $researchResult->fetch_all(MYSQLI_ASSOC);
 $statement->close();
 
 
-$query = "SELECT Type, PbTitle, PublicationDate, TypeOfContribution FROM publication WHERE ExpertID = ?";
+$query = "SELECT PublicationID, Type, PbTitle, PublicationDate, TypeOfContribution FROM publication WHERE ExpertID = ?";
 $statement = $conn->prepare($query);
 $statement->bind_param('i', $expertID);
 $statement->execute();
 $publicationResult = $statement->get_result();
 $publications = $publicationResult->fetch_all(MYSQLI_ASSOC);
 $statement->close();
-?>	
 
 
-
+?>
 
 <!DOCTYPE html>
 <html>
@@ -95,11 +93,6 @@ $statement->close();
         .table-container td {
             text-align: center; /* Center-align the table cells */
         }
-
-      
-
-       
-
     
     </style>
 </head>
@@ -152,6 +145,7 @@ $statement->close();
                         <th>Expert Area</th>
                         <th>Major</th>
                         <th>Year of Expertise</th>
+                        <th colspan="3">Action</th>
                         
                     </tr>
                     <?php foreach ($expertAreas as $expert) { ?>
@@ -159,6 +153,11 @@ $statement->close();
                             <td><?php echo $expert['ExpertArea']; ?></td>
                             <td><?php echo $expert['Major']; ?></td>
                             <td style="text-align: center;"><?php echo $expert['YearOFExpertise']; ?></td>
+                            <td><a href="editForm.php?expertID=" class="button btn btn-primary">Edit</a><br><br>
+                            <td><a href="deleteExpertise.php?ExpertiseID=<?php echo $expert['ExpertiseID']; ?>" class="button btn btn-danger">Delete</a></td>
+
+                        
+                        </td>
                         </tr>
                     <?php } ?>
                 </table>
@@ -177,13 +176,18 @@ $statement->close();
                     <tr>
                         <th>Title</th>
                         <th>Status</th>
+                        <th colspan="3">Action</th>
                      
                         
                     </tr>
-                    <?php foreach ($researchResult as $research) { ?>
+                    <?php foreach ($research as $research) { ?>
                         <tr>
                             <td><?php echo $research['Title']; ?></td>
                             <td><?php echo $research['Status']; ?></td>
+                            <td><a href="editResearchForm.php?expertID=" class="button btn btn-primary">Edit</a><br><br>
+                            <td><a href="deleteResearch.php?researchID=<?php echo $research['researchID']; ?>" class="button btn btn-danger">Delete</a><br><br></td>
+
+
                          
                         </tr>
                     <?php } ?>
@@ -207,6 +211,7 @@ $statement->close();
                     <th>Title</th>
                     <th>Publication Date</th>
                     <th>Type of Contribution</th>
+                    <th colspan="3">Action</th>
                 </tr>
                 <?php foreach ($publications as $publication) { ?>
                     <tr>
@@ -214,6 +219,10 @@ $statement->close();
                         <td><?php echo $publication['PbTitle']; ?></td>
                         <td><?php echo $publication['PublicationDate']; ?></td>
                         <td><?php echo $publication['TypeOfContribution']; ?></td>
+                        <td><a href="editPublicationForm.php?publicationID=<?php echo $publication['PublicationID']; ?>" class="button btn btn-primary">Edit</a><br><br></td>
+
+                        <td><a href="deletePublication.php?publicationID=<?php echo $publication['PublicationID']; ?>" class="button btn btn-danger">Delete</a><br><br></td>
+
                     </tr>
                     <?php } ?>
                 </table>

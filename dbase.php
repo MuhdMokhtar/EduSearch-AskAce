@@ -5,11 +5,11 @@
 define("DATABASE_HOST", "localhost");
 define("DATABASE_USER", "root");
 define("DATABASE_PASS", "");
-define("DATABASE_DB", "edusearch");
+define("DATABASE_DB", "fk-edusearchaskace");
 //define("DATABASE_PASSWORD", "password");
 
 // To establish a connection to database and save in $conn
-$conn = mysqli_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASS);
+$conn = mysqli_connect(DATABASE_HOST, DATABASE_USER);
 
 // If connection failed then dsplay mysql error
 if (mysqli_connect_errno())

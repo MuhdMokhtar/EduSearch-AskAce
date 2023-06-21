@@ -51,15 +51,15 @@ $result = $conn->query($cmdselect);
             
         </div>
         <?php
-            if($row['Response']==null) {
+            if($row['response']==null) {
         ?>
-        <button id="btn1" onclick="location.href='postQuestion.php'">Post Answer</button>
+        <button id="btn1" onclick="location.href='Expert_Respond_Pages.php'">Post Answer</button>
         <?php 
             }else{
         ?>
         <div class="lastPost">
         <b>Answered by: <?php echo $row['ExpertName'];?></b>
-        <br><?php echo $row['Response'];?><br><br>
+        <br><?php echo $row['response'];?><br><br>
         </div>
         <?php
             }

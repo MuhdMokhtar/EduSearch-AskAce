@@ -34,7 +34,7 @@ $result2 = $conn->query($cmdselectlast);
 				<li><a href=""> REPORT </a></li>
 				<li><a href=""> FEEDBACK </a></li>
 				<li><a href="profile.php"> PROFILE </a></li>
-                <li><a href=""> LOGOUT </a></li>
+                <li><a href="logout.php"> LOGOUT </a></li>
             </ul>
         </div>
         <br>

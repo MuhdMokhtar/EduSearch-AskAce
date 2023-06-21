@@ -3,7 +3,7 @@
 include("dbase.php");
 
 //sql command SELECT
-$cmdselect="SELECT DATE_FORMAT(PostDate, '%Y') as 'year', DATE_FORMAT(PostDate, '%M') as 'month', COUNT(PostID) as 'total' FROM post where UserID ='1002' GROUP BY DATE_FORMAT(PostDate, '%Y%m')";
+$cmdselect="SELECT DATE_FORMAT(PostDate, '%Y') as 'year', DATE_FORMAT(PostDate, '%M') as 'month', COUNT(PostID) as 'total' FROM post where UserID =".$_SESSION['UserID']." GROUP BY DATE_FORMAT(PostDate, '%Y%m')";
 
 //execute command
 $result = $conn->query($cmdselect);

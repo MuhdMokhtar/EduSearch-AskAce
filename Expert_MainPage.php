@@ -1,10 +1,9 @@
 <?php
 require_once "dbase.php";
-session_start();
 
-$expertID =  $_SESSION['ExpertID'];
+$expertID = $_SESSION['ExpertID'];
 
-$query = "SELECT PostID, PostTitle, PostContent, PostStatus FROM post WHERE ExpertID = ?";
+$query = "SELECT PostID, PostTitle, PostContent, PostStatus, response FROM post WHERE ExpertID = ?";
 $statement = $conn->prepare($query);
 $statement->bind_param("i", $expertID); // Use 'i' for integer parameter
 $statement->execute();
@@ -16,13 +15,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $postId = $_POST["postId"];
     $action = $_POST["action"];
 
-    if ($action === 'approve') {
+    if ($action === 'Accepted') {
         // Update the status of the post to "approved" in the database
-        $status = 'approved';
+        $status = 'Accepted';
         $query = "UPDATE post SET PostStatus = ? WHERE PostID = ?";
         $statement = $conn->prepare($query);
         $statement->bind_param("ss", $status, $postId);
         $statement->execute();
+?>
+        <script>
+            window.location = "Expert_MainPage.php";
+        </script>
+<?php
     } elseif ($action === 'reject') {
         // Reassign the post to another expert
         $query = "UPDATE post SET ExpertID = (SELECT ExpertID FROM expert WHERE ExpertID <> ? ORDER BY RAND() LIMIT 1) WHERE PostID = ?";
@@ -70,17 +74,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 
     <div class="container">
-        <h1>Welcome, !</h1>
+        <h1>Welcome, <?php echo $_SESSION['ExpertName']; ?>!</h1>
 
         <div class="main-div">
             <main>
                 <section class="post-list">
-                    <h2 class="post-heading">Assigned Posts</h2>
+
                     <?php if (empty($posts)) { ?>
                         <h3>No assigned posts.</h3>
                     <?php } else { ?>
                         <ul>
-                            <?php foreach ($posts as $post) { ?>
+                            <?php foreach ($posts as $post) {
+                                if (!empty($post['response'])) continue; // Skip if the post has a response
+                            ?>
                                 <li>
                                     <h3><?php echo $post['PostTitle']; ?></h3>
                                     <p><?php echo $post['PostContent']; ?></p>
@@ -88,13 +94,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                                     <form method="POST">
                                         <a href="Expert_Respond_Pages.php?title=<?php echo urlencode($post['PostTitle']); ?>&content=<?php echo urlencode($post['PostContent']); ?>" class="button btn-primary" style="text-decoration: none;">Respond</a>
                                         <input type="hidden" name="postId" value="<?php echo $post['PostID']; ?>">
-                                        <button type="submit" name="action" value="approve" class="button btn-primary">Approve</button>
-                                        <button type="submit" name="action" value="reject" class="button btn-danger">Reject</button>
+                                        <button type="submit" name="action" value="Accepted" class="button btn-primary">Approve</button>
+                                        <button type="submit" name="action" value="reject" class="button btn-danger">Remove</button>
                                     </form>
                                 </li>
                             <?php } ?>
                         </ul>
                     <?php } ?>
+
+
+
                 </section>
             </main>
         </div>

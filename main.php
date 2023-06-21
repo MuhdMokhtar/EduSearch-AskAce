@@ -32,7 +32,6 @@ $result2 = $conn->query($cmdselectlast);
                 <li><a href="main.php"> HOME </a></li>
                 <li><a href=""> COMPLAINT </a></li>
 				<li><a href=""> REPORT </a></li>
-				<li><a href=""> FEEDBACK </a></li>
 				<li><a href="profile.php"> PROFILE </a></li>
                 <li><a href="logout.php"> LOGOUT </a></li>
             </ul>

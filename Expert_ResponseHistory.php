@@ -49,11 +49,12 @@
                     <?php
            
 
-           session_start();
+      
            require_once "dbase.php";
 
            // Retrieve responses associated with the signed-in user
-           $userID = $_SESSION['ExpertID'];
+
+                    $userID = $_SESSION['ExpertID'];
                     $query = "SELECT * FROM post WHERE ExpertID = ?";
                     $statement = $conn->prepare($query);
                     $statement->bind_param("i", $userID);

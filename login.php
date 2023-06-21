@@ -17,7 +17,7 @@ session_start();
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
 </head>
-<body style="background-color:rgb(128, 128, 128)>
+<body style="background-color:rgb(128, 128, 128);">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-5 bg-light mt-5 px-0">

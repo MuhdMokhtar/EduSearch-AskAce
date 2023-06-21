@@ -1,6 +1,7 @@
 <?php
 // Start session
-session_start();
+include('dbase.php');
+
 
 // Check if the user is logged in
 if (isset($_SESSION['UserID'])) {
@@ -39,7 +40,7 @@ if ($errflag) {
     exit();
 }
 
-require_once('dbase.php');
+
 
 // Create a query to be executed in SQL
 $username = $_POST['username'];

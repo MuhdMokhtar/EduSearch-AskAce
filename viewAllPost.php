@@ -27,12 +27,11 @@ $result = $conn->query($cmdselect);
     
         <div id="navBar">
             <ul>
-                <li><a href="main.php"> HOME </a></li>
+            <li><a href="main.php"> HOME </a></li>
                 <li><a href=""> COMPLAINT </a></li>
 				<li><a href=""> REPORT </a></li>
-				<li><a href=""> FEEDBACK </a></li>
 				<li><a href="profile.php"> PROFILE </a></li>
-                <li><a href=""> LOGOUT </a></li>
+                <li><a href="logout.php"> LOGOUT </a></li>
             </ul>
         </div>
         <br>

@@ -10,12 +10,11 @@ if(isset($_POST['Send']))
 	$content=$_POST['content'];
 	$status="Pending";
 	$date=date('Y/m/d h:i:s', time());
-	$expertid=2004;
+	$expert='2004';
 	
-	if($pass===$repass){
-		
+	
 		//insert sql
-		$cmdinsert="INSERT INTO post (UserID,PostTitle,PostContent,PostStatus,PostDate,ExpertID) VALUES ('$usrid','$title','$content','$status','$date','$expertid')";
+		$cmdinsert="INSERT INTO post (UserID,PostTitle,PostContent,PostStatus,PostDate,ExpertID) VALUES ('".$_SESSION['UserID']."','$title','$content','$status','$date','$expert')";
 		
 		if ($conn->query($cmdinsert)=== TRUE)
 		{
@@ -46,17 +45,6 @@ if(isset($_POST['Send']))
 			<?php
 			//echo "ERROR: Data cannot be inserted";
 			//register
-	}
-	else
-			$message = "Harap Maaf , kata laluan anda tidak tepat .";
-        	echo "<script type='text/javascript'>alert('$message');</script>";
-			?>
-			<script>
-				window.location="postQuestion.php";
-			</script>
-			<?php
-		//echo "ERROR: Password does not match";
-	//register
 }
 ?>
 <?php
@@ -66,17 +54,15 @@ if(isset($_POST['Save']))
 	include ("dbase.php");
 
 	//declare variable
-	$usrid=1002;
+	$usrid=$_SESSION['UserID'];
 	$title=$_POST['title'];
 	$content=$_POST['content'];
 	$status="Saved";
 	$date=date('Y/m/d h:i:s', time());
-	$expertid=2001;
 	
-	if($pass===$repass){
-		
+	
 		//insert sql
-		$cmdinsert="INSERT INTO post (UserID,PostTitle,PostContent,PostStatus,PostDate,ExpertID) VALUES ('$usrid','$title','$content','$status','$date','$expertid')";
+		$cmdinsert="INSERT INTO post (UserID,PostTitle,PostContent,PostStatus,PostDate) VALUES ('$usrid','$title','$content','$status','$date')";
 		
 		if ($conn->query($cmdinsert)=== TRUE)
 		{
@@ -108,15 +94,5 @@ if(isset($_POST['Save']))
 			//echo "ERROR: Data cannot be inserted";
 			//register
 	}
-	else
-			$message = "Harap Maaf , kata laluan anda tidak tepat .";
-        	echo "<script type='text/javascript'>alert('$message');</script>";
-			?>
-			<script>
-				window.location="postQuestion.php";
-			</script>
-			<?php
-		//echo "ERROR: Password does not match";
-	//register
-}
+
 ?>

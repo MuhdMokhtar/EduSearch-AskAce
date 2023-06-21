@@ -1,17 +1,27 @@
 <?php
-session_start();
+
 require_once "dbase.php";
 
 if (isset($_POST['postTitle'], $_POST['content'])) {
     $postTitle = $_POST['postTitle'];
     $responseContent = $_POST['content'];
-    $expertID =  $_SESSION['ExpertID'];
+    $expertID = $_SESSION['ExpertID'];
 
     if (!empty($responseContent)) {
         // Update the response
-        $query = "UPDATE post SET response = ? WHERE postTitle = ? AND ExpertID = ?";
+        $query = "UPDATE post SET response = ? WHERE PostID = ? AND ExpertID = ?";
         $statement = $conn->prepare($query);
-        $statement->bind_param('sis', $responseContent, $postTitle, $expertID);
+        $statement->bind_param('sii', $responseContent, $postID, $expertID);
+
+        // Retrieve the post ID based on the title
+        $selectQuery = "SELECT PostID FROM post WHERE PostTitle = ?";
+        $selectStatement = $conn->prepare($selectQuery);
+        $selectStatement->bind_param('s', $postTitle);
+        $selectStatement->execute();
+        $selectResult = $selectStatement->get_result();
+        $row = $selectResult->fetch_assoc();
+        $postID = $row['PostID'];
+
         $statement->execute();
 
         // Redirect back to the main page
@@ -21,5 +31,6 @@ if (isset($_POST['postTitle'], $_POST['content'])) {
         echo "Please enter a response.";
     }
 }
+
 
 ?>

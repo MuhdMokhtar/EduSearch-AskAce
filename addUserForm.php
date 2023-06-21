@@ -8,14 +8,13 @@ require_once('dbase.php');
 	
 	if(isset($_POST['Confirm']))
 	{
-		$UserID = $_POST['UserID'];
 		$Username = $_POST['Username'];
 		$Email = $_POST['Email'];
 		$Password = $_POST['Password'];
 		$Phone = $_POST['Phone'];
 		
-		$query = "INSERT INTO users (UserID, Username, Email, Password, Phone)
-					VALUES ('$UserID', '$Username', '$Email', '$Password', '$Phone')";
+		$query = "INSERT INTO users (Username, Email, Password, Phone)
+					VALUES ('$Username', '$Email', '$Password', '$Phone')";
 
 		$result = mysqli_query($conn, $query);
 		

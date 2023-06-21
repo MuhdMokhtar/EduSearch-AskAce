@@ -28,20 +28,19 @@ $result = $conn->query($cmdselect);
 
         <div id="navBar">
             <ul>
-                <li><a href="main.php"> HOME </a></li>
+            <li><a href="main.php"> HOME </a></li>
                 <li><a href=""> COMPLAINT </a></li>
 				<li><a href=""> REPORT </a></li>
-				<li><a href=""> FEEDBACK </a></li>
 				<li><a href="profile.php"> PROFILE </a></li>
-                <li><a href=""> LOGOUT </a></li>
+                <li><a href="logout.php"> LOGOUT </a></li>
             </ul>
         </div>
         <?php $row=$result->fetch_assoc() ;
         $href="viewUserPost.php?uid=".$row['UserID']; ?>
          <div class="lastPost">
             <h1><?php echo $row['PostTitle'];?></h1><hr>
-            <?php echo "<li><a href='".$href."' target='_parent'>" .$row['Username']."</a></li><br>";//call column name using row ?>
-            <b>Posted by: <?php echo $row['Username'];?></b>
+            <!--<?php echo "<li><a href='".$href."' target='_parent'>" .$row['Username']."</a></li><br>";?>-->
+            <b>Posted by: <?php echo "<a href='".$href."' target='_parent'>" .$row['Username']."</a><br>";?></b>
             <br>Status: <?php echo $row['PostStatus'];?><br><br>
             <div class="content">
                 <?php echo $row['PostContent'];?>

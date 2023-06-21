@@ -1,6 +1,7 @@
 <!-- dbase.php -->
 <!-- To connect between php scripting and database. -->
 <?php
+session_start();
 
 define("DATABASE_HOST", "localhost");
 define("DATABASE_USER", "root");

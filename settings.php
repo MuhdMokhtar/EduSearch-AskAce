@@ -3,7 +3,7 @@
 include("dbase.php");
 
 //sql command SELECT
-$cmdselect="SELECT * FROM users WHERE UserID='1004'";
+$cmdselect="SELECT * FROM users WHERE UserID=".$_SESSION['UserID']."";
 
 //execute command
 $result = $conn->query($cmdselect);

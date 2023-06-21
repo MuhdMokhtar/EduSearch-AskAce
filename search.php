@@ -26,19 +26,20 @@ $result = $conn->query($sql);
     
         <div id="navBar">
             <ul>
-                <li><a href="main.php"> HOME </a></li>
+            <li><a href="main.php"> HOME </a></li>
                 <li><a href=""> COMPLAINT </a></li>
 				<li><a href=""> REPORT </a></li>
-				<li><a href=""> FEEDBACK </a></li>
 				<li><a href="profile.php"> PROFILE </a></li>
-                <li><a href=""> LOGOUT </a></li>
+                <li><a href="logout.php"> LOGOUT </a></li>
             </ul>
         </div>
         <br>
+        <center>
         <form action="search.php" method="post">
             Search Keyword: <input type="text" name="search">
             <input type ="submit" value="Search">
         </form>
+        </center>
         <br><br><br>
          <div class="activePost">
             <h3>All Post</h3>

@@ -3,8 +3,8 @@
 include("dbase.php");
 
 //sql command SELECT
-$cmdselect="SELECT * FROM post WHERE UserID='1002'";
-$cmdcount="SELECT COUNT(PostID) as 'total' FROM post where UserID='1002'";
+$cmdselect="SELECT * FROM post WHERE UserID=".$_SESSION['UserID']."";
+$cmdcount="SELECT COUNT(PostID) as 'total' FROM post where UserID=".$_SESSION['UserID']."";
 //execute command
 $result = $conn->query($cmdselect);
 $result2 = $conn->query($cmdcount);

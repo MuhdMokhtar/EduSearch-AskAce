@@ -43,10 +43,6 @@
 				<input type="hidden" name="action" value="insert">
 					<center>
 						<table>
-							<tr>
-								<th>User ID</th>
-								<td><input type="text" id="UserID" name="UserID" placeholder="userID"></td>
-							</tr>
 							
 							<tr>
 								<th>User Name</th>

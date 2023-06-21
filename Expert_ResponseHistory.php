@@ -47,40 +47,43 @@
                 </thead>
                 <tbody>
                     <?php
-           
+                        require_once "dbase.php";
 
-                    require_once "dbase.php";
+                        // Retrieve responses associated with the signed-in user
+                        $userID = 1002;
+                        $query = "SELECT * FROM post WHERE UserID = ?";
+                        $statement = $conn->prepare($query);
+                        $statement->bind_param("i", $userID);
+                        $statement->execute();
+                        $result = $statement->get_result();
 
-                    // Retrieve responses associated with the signed-in user
-                    $userID = 1002;
-                    $query = "SELECT * FROM post WHERE UserID = ?";
-                    $statement = $conn->prepare($query);
-                    $statement->bind_param("i", $userID);
-                    $statement->execute();
-                    $result = $statement->get_result();
-
-                    if ($result->num_rows > 0) {
-                        while ($response = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . htmlspecialchars($response['PostTitle']) . "</td>";
-                            echo "<td>" . htmlspecialchars($response['response']) . "</td>";
-                            echo "<td>";
-                            echo "<button class='btn btn-primary' style='margin-right: 10px;' onclick=\"location.href='edit_response.php?id=" . $response['PostID'] . "'\">Edit</button>";
-                            echo "<button class='btn btn-danger' onclick=\"location.href='delete_response.php?id=" . $response['PostID'] . "'\">Delete</button>";
-
-                            echo "</td>";
-                            echo "</tr>";
+                        if ($result->num_rows > 0) {
+                            while ($response = $result->fetch_assoc()) {
+                                echo "<tr>";
+                                echo "<td>" . htmlspecialchars($response['PostTitle']) . "</td>";
+                                echo "<td>" . htmlspecialchars($response['response']) . "</td>";
+                                echo "<td>";
+                                echo "<button class='btn btn-primary' style='margin-right: 10px;' onclick=\"location.href='edit_response.php?id=" . $response['PostID'] . "'\">Edit</button>";
+                                echo "<button class='btn btn-danger' onclick=\"confirmDelete(" . $response['PostID'] . ")\">Delete</button>";
+                                echo "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='3'>No responses found.</td></tr>";
                         }
-                    } else {
-                        echo "<tr><td colspan='3'>No responses found.</td></tr>";
-                    }
                     ?>
                 </tbody>
             </table>
         </div>
 
         <script src="bootstrap.min.js"></script>
+        <script>
+            function confirmDelete(postID) {
+                if (confirm("Are you sure you want to delete the response?")) {
+                    window.location.href = "delete_response.php?id=" + postID;
+                }
+            }
+        </script>
         <footer>© FK</footer>
     </body>
-
 </html>

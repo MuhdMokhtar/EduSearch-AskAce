@@ -80,12 +80,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['responseID'])) {
                     <label for="content" class="form-label">Response</label>
                     <textarea class="form-control" id="content" name="content"><?php echo $response['response']; ?></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <?php echo "<button type='submit' class='btn btn-primary' onclick=\"confirmSave(" . $response['PostID'] . ")\">Save</button>"; ?>
+
                 <a href="Expert_ResponseHistory.php" class="btn btn-secondary">Cancel</a>
             </form>
         </div>
 
         <script src="bootstrap.min.js"></script>
+        <script>
+            function confirmSave() {
+                return confirm("Are you sure you want to save this response?");
+            }
+        </script>
     </body>
 <footer>© FK</footer>
 </html>

@@ -104,13 +104,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_research'])) {
 
 // Process form submission - Add Publication
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_publication'])) {
+    $type = $_POST['Type'];
     $pbTitle = $_POST['pbTitle'];
     $publicationDate = $_POST['publicationDate'];
     $contributionType = $_POST['contributionType'];
 
-    $query = "INSERT INTO publication (ExpertID, PbTitle, PublicationDate, TypeOfContribution) VALUES (?, ?, ?, ?)";
+    $query = "INSERT INTO publication (ExpertID,Type, PbTitle, PublicationDate, TypeOfContribution) VALUES (?,?, ?, ?, ?)";
     $statement = $conn->prepare($query);
-    $statement->bind_param('isss', $expertID, $pbTitle, $publicationDate, $contributionType);
+    $statement->bind_param('issss', $expertID, $type, $pbTitle, $publicationDate, $contributionType);
+
 
     if ($statement->execute()) {
         // Insert successful
@@ -239,8 +241,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_publication'])) {
         <h3>Add Publication</h3>
         <form action="Expert_UpdateProfile.php" method="post">
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <input type="hidden" name="UserID" value="<?php echo $expertID; ?>">
+
+                    <label for="pbTitle">Type:</label>
+                    <input type="text" name="Type" id="Type" required>
 
                     <label for="pbTitle">Publication Title:</label>
                     <input type="text" name="pbTitle" id="pbTitle" required>

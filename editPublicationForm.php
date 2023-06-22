@@ -1,10 +1,11 @@
 <?php
+session_start();
 require_once('dbase.php');
 
 $expertID = $_SESSION['ExpertID'];
 
 // Fetch publications from the database
-$query = "SELECT PublicationID, Type,PbTitle, PublicationDate, TypeofContribution FROM publication WHERE ExpertID = ?";
+$query = "SELECT PublicationID, Type, PbTitle, PublicationDate, TypeofContribution FROM publication WHERE ExpertID = ?";
 $statement = $conn->prepare($query);
 $statement->bind_param('i', $expertID);
 $statement->execute();
@@ -15,14 +16,14 @@ $statement->close();
 // Process form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_publication'])) {
     $publicationID = $_POST['publicationID'];
+    $type = $_POST['Type'];
     $title = $_POST['PbTitle'];
     $publicationDate = $_POST['PublicationDate'];
     $contributionType = $_POST['TypeofContribution'];
 
-    $query = "UPDATE publication SET PbTitle = ?, PublicationDate = ?, TypeofContribution = ? WHERE PublicationID = ?";
+    $query = "UPDATE publication SET Type = ?, PbTitle = ?, PublicationDate = ?, TypeofContribution = ? WHERE PublicationID = ?";
     $statement = $conn->prepare($query);
-    $statement->bind_param('sssi', $title, $publicationDate, $contributionType, $publicationID);
-
+    $statement->bind_param('ssssi', $type, $title, $publicationDate, $contributionType, $publicationID);
 
     if ($statement->execute()) {
         // Update successful, redirect to profile page
@@ -38,7 +39,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_publication'])) 
 ?>
 <!DOCTYPE html>
 <html>
-
 <head>
     <title>Update Profile</title>
     <link rel="stylesheet" type="text/css" href="viewprofile.css">
@@ -46,7 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_publication'])) 
     <link rel="stylesheet" type="text/css" href="stylecss.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
-
 <body>
     <header class="header">
         <div class="logo-left">
@@ -73,8 +72,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_publication'])) 
 
         <h3>Publication Information</h3>
         <div>
-            <form action="editPublicationForm.php" method="post">
-                <?php foreach ($publications as $publication) { ?>
+            <?php foreach ($publications as $publication) { ?>
+                <form action="editPublicationForm.php" method="post">
                     <input type="hidden" name="publicationID" value="<?php echo $publication['PublicationID']; ?>">
 
                     <label for="title">Type:</label>
@@ -89,17 +88,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_publication'])) 
                     <label for="contributionType">Type of Contribution:</label>
                     <input type="text" name="TypeofContribution" id="TypeofContribution" value="<?php echo $publication['TypeofContribution']; ?>" required>
 
-
                     <br><br>
 
                     <input type="submit" class="btn btn-primary" name="edit_publication" value="Update Publication">
-                <?php } ?>
-            </form>
-            <hr>
+                </form>
+                <hr>
+            <?php } ?>
         </div>
     </div>
 
     <footer>© FK</footer>
 </body>
-
 </html>

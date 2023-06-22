@@ -21,5 +21,6 @@ if (isset($_POST['submit'])) {
         </div>
 <?php
     }
-}
+  }
+  header("Location: Expert_ViewProfile.php")
 ?>

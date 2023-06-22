@@ -1,6 +1,6 @@
 <?php
 require_once('dbase.php');
-session_start();
+
 $expertID = $_SESSION['ExpertID'];
 
 // Fetch research from the database

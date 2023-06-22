@@ -1,10 +1,10 @@
 <?php
 require_once('dbase.php');
-session_start();
+
 $expertID = $_SESSION['ExpertID'];
 
 // Fetch publications from the database
-$query = "SELECT PublicationID, PbTitle, PublicationDate, TypeofContribution FROM publication WHERE ExpertID = ?";
+$query = "SELECT PublicationID, Type,PbTitle, PublicationDate, TypeofContribution FROM publication WHERE ExpertID = ?";
 $statement = $conn->prepare($query);
 $statement->bind_param('i', $expertID);
 $statement->execute();
@@ -76,6 +76,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_publication'])) 
             <form action="editPublicationForm.php" method="post">
                 <?php foreach ($publications as $publication) { ?>
                     <input type="hidden" name="publicationID" value="<?php echo $publication['PublicationID']; ?>">
+
+                    <label for="title">Type:</label>
+                    <input type="text" name="Type" id="Type" value="<?php echo $publication['Type']; ?>" required>
 
                     <label for="title">Title:</label>
                     <input type="text" name="PbTitle" id="PbTitle" value="<?php echo $publication['PbTitle']; ?>" required>

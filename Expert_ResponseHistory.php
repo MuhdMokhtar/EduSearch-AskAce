@@ -47,51 +47,55 @@
                 </div>
             </form>
 
-            <table class="table table-dark">
-                <thead>
-                    <tr>
-                        <th>Post Title</th>
-                        <th>Response</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    require_once "dbase.php";
+            <?php
+require_once "dbase.php";
 
-                    // Retrieve responses associated with the signed-in user
-                    $userID = $_SESSION['ExpertID'];
-                    $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
+// Retrieve responses associated with the signed-in user
+$userID = $_SESSION['ExpertID'];
+$searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
 
-                    $query = "SELECT * FROM post WHERE ExpertID = ? AND PostTitle LIKE ?";
-                    $statement = $conn->prepare($query);
-                    $searchKeyword = "%{$searchKeyword}%";
-                    $statement->bind_param("is", $userID, $searchKeyword);
-                    $statement->execute();
-                    $result = $statement->get_result();
+$query = "SELECT * FROM post WHERE ExpertID = ? AND response IS NOT NULL AND response <> '' AND PostTitle LIKE ?";
+$statement = $conn->prepare($query);
+$searchKeyword = "%{$searchKeyword}%";
+$statement->bind_param("is", $userID, $searchKeyword);
+$statement->execute();
+$result = $statement->get_result();
 
-                    $totalResponses = $result->num_rows; // Get the total number of responses
+$totalResponses = $result->num_rows; // Get the total number of responses
 
-                    // Display the total number of responses
-                    echo "<h3>Total Responses: $totalResponses</h3>";
+// Display the total number of responses
+echo "<h3>Total Responses: $totalResponses</h3>";
 
-                    if ($result->num_rows > 0) {
-                        while ($response = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . htmlspecialchars($response['PostTitle']) . "</td>";
-                            echo "<td>" . htmlspecialchars($response['response']) . "</td>";
-                            echo "<td>";
-                            echo "<button class='btn btn-primary' style='margin-right: 10px;' onclick=\"location.href='edit_response.php?id=" . $response['PostID'] . "'\">Edit</button>";
-                            echo "<button class='btn btn-danger' onclick=\"location.href='delete_response.php?id=" . $response['PostID'] . "'\">Delete</button>";
-                            echo "</td>";
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='3'>No responses found.</td></tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
+if ($result->num_rows > 0) {
+    echo "<table class='table table-dark'>";
+    echo "<thead>";
+    echo "<tr>";
+    echo "<th>Post Title</th>";
+    echo "<th>Response</th>";
+    echo "<th>Actions</th>";
+    echo "</tr>";
+    echo "</thead>";
+    echo "<tbody>";
+
+    while ($response = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . htmlspecialchars($response['PostTitle']) . "</td>";
+        echo "<td>" . htmlspecialchars($response['response']) . "</td>";
+        echo "<td>";
+        echo "<button class='btn btn-primary' style='margin-right: 10px;' onclick=\"location.href='edit_response.php?id=" . $response['PostID'] . "'\">Edit</button>";
+        echo "<button class='btn btn-danger' onclick=\"location.href='delete_response.php?id=" . $response['PostID'] . "'\">Delete</button>";
+        echo "</td>";
+        echo "</tr>";
+    }
+
+    echo "</tbody>";
+    echo "</table>";
+} else {
+    echo "<p>No responses found.</p>";
+}
+?>
+
+
         </div>
 
         <script src="bootstrap.min.js"></script>

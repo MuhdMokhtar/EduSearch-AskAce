@@ -33,6 +33,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $statement = $conn->prepare($query);
         $statement->bind_param("ss", $expertID, $postId);
         $statement->execute();
+        ?>
+        <script>
+            window.location = "Expert_MainPage.php";
+        </script>
+<?php
     }
 }
 

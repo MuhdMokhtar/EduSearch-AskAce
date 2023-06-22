@@ -1,6 +1,6 @@
 <?php
 require_once "dbase.php";
-session_start();
+
 
 $expertID = $_SESSION['ExpertID'];
 
@@ -36,6 +36,14 @@ $statement->bind_param('i', $expertID);
 $statement->execute();
 $publicationResult = $statement->get_result();
 $publications = $publicationResult->fetch_all(MYSQLI_ASSOC);
+$statement->close();
+
+$query = "SELECT id,filename FROM expertCV WHERE ExpertID = ?";
+$statement = $conn->prepare($query);
+$statement->bind_param('i', $expertID);
+$statement->execute();
+$cvResult = $statement->get_result();
+$cv = $cvResult->fetch_all(MYSQLI_ASSOC);
 $statement->close();
 
 
@@ -77,23 +85,27 @@ $statement->close();
         }
 
         .expertise {
-            width: 500px; /* Set the desired width for the expertise container */
+            width: 600px;
+            /* Set the desired width for the expertise container */
         }
 
         .table-container {
-            width: 100%; /* Set the table container to occupy the full width */
-            margin-bottom: 20px; /* Add some spacing between the tables */
+            width: 100%;
+            /* Set the table container to occupy the full width */
+            margin-bottom: 20px;
+            /* Add some spacing between the tables */
         }
 
         .table-container table {
-            width: 100%; /* Make the table occupy the full width of its container */
+            width: 100%;
+            /* Make the table occupy the full width of its container */
         }
 
         .table-container th,
         .table-container td {
-            text-align: center; /* Center-align the table cells */
+            text-align: center;
+            /* Center-align the table cells */
         }
-    
     </style>
 </head>
 
@@ -110,9 +122,9 @@ $statement->close();
     <div id="navBar">
         <ul>
             <li><a href="Expert_MainPage.php"> HOME </a></li>
+            <li><a href="Expert_ResponseHistory.php">RESPONSES HISTORY </a></li>
             <li><a href=""> COMPLAINT </a></li>
             <li><a href=""> REPORT </a></li>
-            <li><a href=""> FEEDBACK </a></li>
             <li><a href="Expert_ViewProfile.php"> PROFILE </a></li>
             <li><a href="login.php">LOGIN</a></li>
         </ul>
@@ -131,9 +143,9 @@ $statement->close();
             </div>
 
             <button class="btn btn-info update-button">
-        <a href="Expert_UpdateProfile.php" style="text-decoration: none; color: inherit;">Update</a>
-    </button>
-       
+                <a href="Expert_UpdateProfile.php" style="text-decoration: none; color: inherit;">Update</a>
+            </button>
+
     </div>
     <div class="expertise-container">
         <div class="expertise">
@@ -146,7 +158,7 @@ $statement->close();
                         <th>Major</th>
                         <th>Year of Expertise</th>
                         <th colspan="3">Action</th>
-                        
+
                     </tr>
                     <?php foreach ($expertAreas as $expert) { ?>
                         <tr>
@@ -156,8 +168,8 @@ $statement->close();
                             <td><a href="editForm.php?expertID=" class="button btn btn-primary">Edit</a><br><br>
                             <td><a href="deleteExpertise.php?ExpertiseID=<?php echo $expert['ExpertiseID']; ?>" class="button btn btn-danger">Delete</a></td>
 
-                        
-                        </td>
+
+                            </td>
                         </tr>
                     <?php } ?>
                 </table>
@@ -177,8 +189,8 @@ $statement->close();
                         <th>Title</th>
                         <th>Status</th>
                         <th colspan="3">Action</th>
-                     
-                        
+
+
                     </tr>
                     <?php foreach ($research as $research) { ?>
                         <tr>
@@ -188,7 +200,7 @@ $statement->close();
                             <td><a href="deleteResearch.php?researchID=<?php echo $research['researchID']; ?>" class="button btn btn-danger">Delete</a><br><br></td>
 
 
-                         
+
                         </tr>
                     <?php } ?>
                 </table>
@@ -206,24 +218,24 @@ $statement->close();
             <?php if ($publicationResult) { ?>
                 <table class="table table-striped">
 
-                <tr>
-                    <th>Type</th>
-                    <th>Title</th>
-                    <th>Publication Date</th>
-                    <th>Type of Contribution</th>
-                    <th colspan="3">Action</th>
-                </tr>
-                <?php foreach ($publications as $publication) { ?>
                     <tr>
-                    <td><?php echo $publication['Type']; ?></td>
-                        <td><?php echo $publication['PbTitle']; ?></td>
-                        <td><?php echo $publication['PublicationDate']; ?></td>
-                        <td><?php echo $publication['TypeOfContribution']; ?></td>
-                        <td><a href="editPublicationForm.php?publicationID=<?php echo $publication['PublicationID']; ?>" class="button btn btn-primary">Edit</a><br><br></td>
-
-                        <td><a href="deletePublication.php?publicationID=<?php echo $publication['PublicationID']; ?>" class="button btn btn-danger">Delete</a><br><br></td>
-
+                        <th>Type</th>
+                        <th>Title</th>
+                        <th>Publication Date</th>
+                        <th>Type of Contribution</th>
+                        <th colspan="3">Action</th>
                     </tr>
+                    <?php foreach ($publications as $publication) { ?>
+                        <tr>
+                            <td><?php echo $publication['Type']; ?></td>
+                            <td><?php echo $publication['PbTitle']; ?></td>
+                            <td><?php echo $publication['PublicationDate']; ?></td>
+                            <td><?php echo $publication['TypeOfContribution']; ?></td>
+                            <td><a href="editPublicationForm.php?publicationID=<?php echo $publication['PublicationID']; ?>" class="button btn btn-primary">Edit</a><br><br></td>
+
+                            <td><a href="deletePublication.php?publicationID=<?php echo $publication['PublicationID']; ?>" class="button btn btn-danger">Delete</a><br><br></td>
+
+                        </tr>
                     <?php } ?>
                 </table>
             <?php } else { ?>
@@ -232,18 +244,52 @@ $statement->close();
         </div>
     </div>
 
-    <div class="cv-upload">
-        <h2>Upload CV</h2>
-        <form action="upload.php" method="post" enctype="multipart/form-data">
-            <input type="file" name="cvFile">
-            <input type="submit" value="Upload">
-        </form>
+    <div class="expertise-container">
+    <div class="expertise">
+        <h2>CV</h2>
+        <?php if ($cvResult) { ?>
+            <table class="table table-striped">
+                <tr>
+                    <th>Filename</th>
+                    <th>View</th>
+                    <th>Delete</th>
+                </tr>
+                <?php foreach ($cv as $cv) { ?>
+                    <tr>
+                        <td><?php echo $cv['filename']; ?></td>
+                        <td>
+                            <a href="pdf/<?php echo $cv['filename']; ?>" target="_blank">View</a>
+                        </td>
+                        <td>
+                            <form action="deleteCV.php" method="post">
+                                <input type="hidden" name="id" value="<?php echo $cv['id']; ?>">
+                                <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php } ?>
+            </table>
+        
+
+                        <form action="upload.php" method="post" enctype="multipart/form-data">
+                            <div class="form-input py-2">
+                                <h3>Upload CV</h3>
+                                <div class="form-group">
+                                    <input type="file" name="pdf_file" class="form-control" accept=".pdf" title="Upload PDF" />
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <input type="submit" class="button btn btn-primary" name="submit" value="Submit">
+                                </div>
+                            </div>
+                        </form>
+            <?php } else { ?>
+                <p>No CV found.</p>
+            <?php } ?>
+        </div>
     </div>
 
-    <br>
-    <button class="btn btn-info update-button">
-        <a href="Expert_UpdateProfile.php" style="text-decoration: none; color: inherit;">Update</a>
-    </button>
+
 <?php } else { ?>
     <p>No expert found.</p>
 <?php } ?>

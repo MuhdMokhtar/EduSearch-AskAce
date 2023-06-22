@@ -1,6 +1,6 @@
 <?php
 require_once "dbase.php";
-session_start();
+
 
 $expertID = $_SESSION['ExpertID'];
 
@@ -150,6 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_publication'])) {
     <div id="navBar">
         <ul>
             <li><a href="Expert_MainPage.php"> HOME </a></li>
+            <li><a href="Expert_ResponseHistory.php">RESPONSES HISTORY </a></li>
             <li><a href=""> COMPLAINT </a></li>
             <li><a href=""> REPORT </a></li>
             <li><a href=""> FEEDBACK </a></li>

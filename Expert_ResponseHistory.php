@@ -22,12 +22,12 @@
     <div id="navBar">
         <ul>
             <li><a href="Expert_MainPage.php"> HOME </a></li>
-            <li><a href="Expert_ResponseHistory.php"> HISTORY RESPONSES </a></li>
+            <li><a href="Expert_ResponseHistory.php">RESPONSES HISTORY </a></li>
             <li><a href=""> COMPLAINT </a></li>
             <li><a href=""> REPORT </a></li>
             <li><a href=""> FEEDBACK </a></li>
             <li><a href="Expert_ViewProfile.php"> PROFILE </a></li>
-            <li><a href=""> LOGOUT </a></li>
+            <li><a href="logout.php"> LOGOUT </a></li>
         </ul>
     </div>
 
@@ -37,6 +37,16 @@
         </header>
 
         <div class="container">
+            <form method="GET" action="">
+                <div class="mb-3">
+                    <label for="search" class="form-label">Search:</label>
+                    <input type="text" name="search" id="search" class="form-control" placeholder="Enter post title">
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </form>
+
             <table class="table table-dark">
                 <thead>
                     <tr>
@@ -47,19 +57,23 @@
                 </thead>
                 <tbody>
                     <?php
-           
+                    require_once "dbase.php";
 
-      
-           require_once "dbase.php";
-
-           // Retrieve responses associated with the signed-in user
-
+                    // Retrieve responses associated with the signed-in user
                     $userID = $_SESSION['ExpertID'];
-                    $query = "SELECT * FROM post WHERE ExpertID = ?";
+                    $searchKeyword = isset($_GET['search']) ? $_GET['search'] : '';
+
+                    $query = "SELECT * FROM post WHERE ExpertID = ? AND PostTitle LIKE ?";
                     $statement = $conn->prepare($query);
-                    $statement->bind_param("i", $userID);
+                    $searchKeyword = "%{$searchKeyword}%";
+                    $statement->bind_param("is", $userID, $searchKeyword);
                     $statement->execute();
                     $result = $statement->get_result();
+
+                    $totalResponses = $result->num_rows; // Get the total number of responses
+
+                    // Display the total number of responses
+                    echo "<h3>Total Responses: $totalResponses</h3>";
 
                     if ($result->num_rows > 0) {
                         while ($response = $result->fetch_assoc()) {
@@ -69,7 +83,6 @@
                             echo "<td>";
                             echo "<button class='btn btn-primary' style='margin-right: 10px;' onclick=\"location.href='edit_response.php?id=" . $response['PostID'] . "'\">Edit</button>";
                             echo "<button class='btn btn-danger' onclick=\"location.href='delete_response.php?id=" . $response['PostID'] . "'\">Delete</button>";
-
                             echo "</td>";
                             echo "</tr>";
                         }

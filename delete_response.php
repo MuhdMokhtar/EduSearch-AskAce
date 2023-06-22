@@ -5,13 +5,13 @@ require_once "dbase.php";
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     $postID = $_GET['id'];
 
-    // Update the response column to NULL for the specified PostID
-    $query = "UPDATE post SET response = NULL WHERE PostID = ?";
+    // Delete the row from the database for the specified PostID
+    $query = "DELETE FROM post WHERE PostID = ?";
     $statement = $conn->prepare($query);
     $statement->bind_param("i", $postID);
     $statement->execute();
 
-    // Redirect back to the Expert_ResponseHistory.php page after updating
+    // Redirect back to the Expert_ResponseHistory.php page after deleting
     header("Location: Expert_ResponseHistory.php");
     exit();
 } else {

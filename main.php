@@ -3,8 +3,8 @@
 include("dbase.php");
 
 //sql command SELECT
-$cmdselect="SELECT post.*, users.Username FROM post INNER JOIN users ON post.UserID=users.UserID WHERE post.PostStatus='Accepted' ORDER BY PostDate DESC LIMIT 3";
-$cmdselectlast="SELECT post.*, users.Username FROM post INNER JOIN users ON post.UserID=users.UserID WHERE post.PostStatus='Accepted' ORDER BY PostDate DESC";
+$cmdselect="SELECT post.*, users.Username FROM post INNER JOIN users ON post.UserID=users.UserID WHERE post.PostStatus='Accepted' OR post.PostStatus='Closed' ORDER BY PostDate DESC LIMIT 3";
+$cmdselectlast="SELECT post.*, users.Username FROM post INNER JOIN users ON post.UserID=users.UserID WHERE post.PostStatus='Accepted' OR post.PostStatus='Closed' ORDER BY PostDate DESC";
 
 //execute command
 $result = $conn->query($cmdselect);
@@ -30,8 +30,8 @@ $result2 = $conn->query($cmdselectlast);
         <div id="navBar">
             <ul>
                 <li><a href="main.php"> HOME </a></li>
-                <li><a href=""> COMPLAINT </a></li>
-				<li><a href=""> REPORT </a></li>
+                <li><a href="complaint.php"> COMPLAINT </a></li>
+				<li><a href="report.php"> REPORT </a></li>
 				<li><a href="profile.php"> PROFILE </a></li>
                 <li><a href="logout.php"> LOGOUT </a></li>
             </ul>

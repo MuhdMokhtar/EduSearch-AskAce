@@ -31,11 +31,10 @@ $content = isset($_GET['content']) ? $_GET['content'] : "";
     <div id="navBar">
         <ul>
             <li><a href="Expert_MainPage.php"> HOME </a></li>
-            <li><a href=""> COMPLAINT </a></li>
-            <li><a href=""> REPORT </a></li>
-            <li><a href=""> FEEDBACK </a></li>
+            <li><a href="Expert_ResponseHistory.php">RESPONSES HISTORY </a></li>
+            <li><a href="expert_Report.php"> REPORT </a></li>
             <li><a href="Expert_ViewProfile.php"> PROFILE </a></li>
-            <li><a href=""> LOGOUT </a></li>
+            <li><a href="logout.php"> LOGOUT </a></li>
         </ul>
     </div>
 

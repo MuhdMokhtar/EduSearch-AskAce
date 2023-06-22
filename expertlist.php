@@ -43,7 +43,7 @@
         <li><a href=""> COMPLAINT </a></li>
         <li><a href=""> REPORT </a></li>
         <li><a href=""> FEEDBACK </a></li>
-        <li><a href="profile.php"> PROFILE </a></li>
+        <li><a href=""> PROFILE </a></li>
         <li><a href="logout.php"> LOGOUT </a></li>
     </ul>
 </div>
@@ -95,11 +95,12 @@
 					<table>
 	
 					  <tr id="list">
-						<td style="background-color:#a6bbbd color: white"><b>ExpertID</b></td>
-						<td style="background-color:#a6bbbd color: white"><b>ExpertName</b></td>
-						<td style="background-color:#a6bbbd color: white"><b>ExpertEmail</b></td>
-						<td style="background-color:#a6bbbd color: white"><b>ExpertPassword</b></td>
-						<td colspan="2" style="background-color:#a6bbbd color: white"><b>ACTIONS</b></td>
+						<td style="background-color:#a6bbbd; color:white;"><b>ExpertID</b></td>
+						<td style="background-color:#a6bbbd; color:white;"><b>ExpertName</b></td>
+						<td style="background-color:#a6bbbd; color:white;"><b>ExpertEmail</b></td>
+						<td style="background-color:#a6bbbd; color:white;"><b>ContactInfo</b></td>
+						<td style="background-color:#a6bbbd; color:white;"><b>ExpertPassword</b></td>
+						<td colspan="3" style="background-color:#a6bbbd; color:white;"><b>ACTIONS</b></td>
 					  </tr>
 					  
 					  
@@ -109,15 +110,18 @@
 							$ExpertID = $row['ExpertID'];
 							$ExpertName = $row['ExpertName'];
 							$ExpertEmail = $row['ExpertEmail'];
+							$ContactInfo = $row['ContactInfo'];
 							$ExpertPassword = $row['ExpertPassword'];
 					  ?>
 						<tr id="list">
-							<td><?php echo $ExpertID ?></td>
+							td><?php echo $ExpertID ?></td>
 							<td><?php echo $ExpertName ?></td>
 							<td><?php echo $ExpertEmail ?></td>
+							<td><?php echo $ContactInfo ?></td>
 							<td><?php echo $ExpertPassword ?></td>
 							<td><a href="updateExpert.php?GetExpert=<?php echo $ExpertID ?>">Edit</a></td>
                             <td><a onclick="deleteExpert()" href="deleteExpertForm.php?DeleteExpert=<?php echo $ExpertID ?>">Delete</a></td>
+							
 						</tr>
 					  <?php
 						}

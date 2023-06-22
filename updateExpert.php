@@ -17,6 +17,7 @@
 		$ExpertID = $row['ExpertID'];
 		$ExpertName = $row['ExpertName'];
 		$ExpertEmail = $row['ExpertEmail'];
+		$ContactInfo = $row['ContactInfo'];
 		$ExpertPassword = $row['ExpertPassword'];
 	}
 ?>
@@ -46,12 +47,11 @@
 
 <div id="navBar">
     <ul>
-        <li><a href="main.php"> HOME </a></li>
-        <li><a href=""> COMPLAINT </a></li>
-        <li><a href=""> REPORT </a></li>
-        <li><a href=""> FEEDBACK </a></li>
-        <li><a href="profile.php"> PROFILE </a></li>
-        <li><a href=""> LOGOUT </a></li>
+	<li><a href="main.php"> HOME </a></li>
+                <li><a href="complaint.php"> COMPLAINT </a></li>
+				<li><a href="report.php"> REPORT </a></li>
+				<li><a href="profile.php"> PROFILE </a></li>
+                <li><a href="logout.php"> LOGOUT </a></li>
     </ul>
 </div>
 
@@ -161,6 +161,11 @@
 							<tr>
 								<th>Expert Email</th>
 								<td><input type="text" id="ExpertEmail" name="ExpertEmail" value="<?php echo $ExpertEmail ?>"></td>
+							</tr>
+							
+							<tr>
+								<th>Contact Info</th>
+								<td><input type="text" id="ContactInfo" name="ContactInfo" value="<?php echo $ContactInfo ?>"></td>
 							</tr>
 							
 							<tr>

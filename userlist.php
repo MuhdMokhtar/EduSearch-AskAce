@@ -40,12 +40,11 @@
 
 <div id="navBar">
     <ul>
-        <li><a href="main.php"> HOME </a></li>
-        <li><a href=""> COMPLAINT </a></li>
-        <li><a href=""> REPORT </a></li>
-        <li><a href=""> FEEDBACK </a></li>
-        <li><a href="profile.php"> PROFILE </a></li>
-        <li><a href="logout.php"> LOGOUT </a></li>
+	<li><a href="main.php"> HOME </a></li>
+                <li><a href="complaint.php"> COMPLAINT </a></li>
+				<li><a href="report.php"> REPORT </a></li>
+				<li><a href="profile.php"> PROFILE </a></li>
+                <li><a href="logout.php"> LOGOUT </a></li>
     </ul>
 </div>
 
@@ -98,12 +97,12 @@
 					<table>
 	
 					  <tr id="list">
-						<td style="background-color:#a6bbbd color: white"><b>UserID</b></td>
-						<td style="background-color:#a6bbbd color: white"><b>Username</b></td>
-						<td style="background-color:#a6bbbd color: white"><b>Email</b></td>
-						<td style="background-color:#a6bbbd color: white"><b>Password</b></td>
-                        <td style="background-color:#a6bbbd color: white"><b>Phone</b></td>
-						<td colspan="2" style="background-color:#a6bbbd color: white"><b>ACTIONS</b></td>
+						<td style="background-color:#a6bbbd; color: white"><b>UserID</b></td>
+						<td style="background-color:#a6bbbd; color: white"><b>Username</b></td>
+						<td style="background-color:#a6bbbd; color: white"><b>Email</b></td>
+						<td style="background-color:#a6bbbd; color: white"><b>Password</b></td>
+                        <td style="background-color:#a6bbbd; color: white"><b>Phone</b></td>
+						<td colspan="3" style="background-color:#a6bbbd; color: white"><b>ACTIONS</b></td>
 					  </tr>
 					  
 					  
@@ -124,6 +123,8 @@
                             <td><?php echo $Phone ?></td>
 							<td><a href="updateUser.php?GetUser=<?php echo $UserID ?>">Edit</a></td>
                             <td><a onclick="deleteUser()" href="deleteUserForm.php?DeleteUser=<?php echo $UserID ?>">Delete</a></td>
+							
+							
 						</tr>
 					  <?php
 						}

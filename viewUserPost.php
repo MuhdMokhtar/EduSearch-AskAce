@@ -35,7 +35,7 @@ $result3 = $conn->query($cmdselect2);
             <ul>
             <li><a href="main.php"> HOME </a></li>
                 <li><a href=""> COMPLAINT </a></li>
-				<li><a href=""> REPORT </a></li>
+				<li><a href="report.php"> REPORT </a></li>
 				<li><a href="profile.php"> PROFILE </a></li>
                 <li><a href="logout.php"> LOGOUT </a></li>
             </ul>

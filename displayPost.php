@@ -29,8 +29,8 @@ $result = $conn->query($cmdselect);
         <div id="navBar">
             <ul>
             <li><a href="main.php"> HOME </a></li>
-                <li><a href=""> COMPLAINT </a></li>
-				<li><a href=""> REPORT </a></li>
+                <li><a href="complaint.php"> COMPLAINT </a></li>
+				<li><a href="report.php"> REPORT </a></li>
 				<li><a href="profile.php"> PROFILE </a></li>
                 <li><a href="logout.php"> LOGOUT </a></li>
             </ul>
@@ -52,7 +52,7 @@ $result = $conn->query($cmdselect);
         <?php
             if($row['response']==null) {
         ?>
-        <button id="btn1" onclick="location.href='Expert_Respond_Pages.php'">Post Answer</button>
+        <?php echo "No response Yet";?>
         <?php 
             }else{
         ?>
@@ -62,7 +62,13 @@ $result = $conn->query($cmdselect);
         </div>
         <?php
             }
+            $href="closed.php?uid=".$row['PostID'];
+            if($row['response']!=null) {
         ?>
+            <?php echo "<li><a href='".$href."'>Mark as Closed</a></li><br>";//call column name using row ?>
+        <?php
+            }
+            ?>
         </body>
     <footer>Copyright FK</footer>
 </html>
